@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "380106297096",
+    "project_id": "kataquiz-15788",
+    "storage_bucket": "kataquiz-15788.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380106297096:android:ae5490019abeaa7f4a66bd",
+        "android_client_info": {
+          "package_name": "com.example.kataquiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnVVRXR5Rjdb7yr20nVPxOrgGQ-nBL24s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
