@@ -24,6 +24,8 @@ public class SignInActivity extends AppCompatActivity {
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to database layer
 
+    NavigationHelper navigationHelper = new NavigationHelper(); // reference to Navigation helper class
+
     private final String TAG = "SignInActivity"; // tag for Logs
 
     /**
@@ -41,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
 
         // current user is already signed in, take them to dashboard
         if (firebaseHelper.getmAuth().getCurrentUser() != null) {
-            new Navigation().takeToDashboard(SignInActivity.this);
+            navigationHelper.takeToDashboard(SignInActivity.this);
         }
     }
 
@@ -67,7 +69,7 @@ public class SignInActivity extends AppCompatActivity {
                                 // if sign in successful
                                 Toast.makeText(getApplicationContext(), "Sign in successful!",
                                         Toast.LENGTH_SHORT).show();
-                                new Navigation().takeToDashboard(SignInActivity.this);
+                                navigationHelper.takeToDashboard(SignInActivity.this);
                             } else {
                                 // else sign in failed
                                 Log.d(TAG, "Failed to log in with email " + email + task.getException());

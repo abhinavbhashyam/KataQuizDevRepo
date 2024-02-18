@@ -7,6 +7,18 @@
     android:background="#ffcc66"
     tools:context=".DashboardActivity">
 
+    <Button
+        android:id="@+id/generateQuizBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="generateQuiz"
+        android:text="GENERATE QUIZ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.793" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/categorySP"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -59,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.882" />
+        app:layout_constraintVertical_bias="0.945" />
 
     <TextView
         android:id="@+id/displayWelcomeTV"

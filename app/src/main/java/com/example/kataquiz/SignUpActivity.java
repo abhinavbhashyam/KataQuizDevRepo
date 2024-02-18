@@ -3,9 +3,6 @@ package com.example.kataquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
  * This class is used to sign up a User and add them to our database
  */
 public class SignUpActivity extends AppCompatActivity {
+    NavigationHelper navigationHelper = new NavigationHelper(); // reference to Navigation helper class
 
     // get references to UI elements
     private EditText emailET, passwordET, firstNameET, lastNameET;
@@ -86,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             + " " + lastName + "!", Toast.LENGTH_SHORT).show();
 
                                     // take to appropriate screen after sign up/login
-                                    new Navigation().takeToDashboard(SignUpActivity.this);
+                                    navigationHelper.takeToDashboard(SignUpActivity.this);
                                 } else {
                                     // user was not created successfully (usually due to duplicate email)
                                     Log.d(TAG, "Sign up unsuccessful");

@@ -8,7 +8,7 @@ import android.content.Intent;
 /**
  * Helper class that contains methods that are called when user is transitioning between activities
  */
-public class Navigation {
+public class NavigationHelper {
     /**
      * Helper method to call when we are ready to take the user to dashboard. Displays alert popup.
      */
@@ -17,7 +17,8 @@ public class Navigation {
 
         // set text for popup
         builder.setMessage("On the next screen, you'll get to generate a quiz of your choice! " +
-                        "Questions are fetched from the Open Trivia Database.")
+                        "Questions are fetched from the Open Trivia Database. " +
+                        "All quizzes are 10 questions long, so you have the chance of exploring as many questions as possible!")
                 .setTitle("Get ready!");
 
         // add the buttons
