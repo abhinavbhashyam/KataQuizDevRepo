@@ -45,13 +45,14 @@ public class DashboardActivity extends AppCompatActivity {
             "Entertainment: Comics", "Science: Gadgets", "Entertainment: Japanese Anime & Manga",
             "Entertainment: Cartoon & Animations"};
 
-    Map<String, Integer> categoryIDMapping;
-
     String[] difficulties = {"Any Difficulty", "Easy", "Medium", "Hard"};
 
     String[] types = {"Any Type", "Multiple Choice", "True / False"};
 
-    // get questions using API
+    // mapping so we can figure out the category ID from the category name
+    Map<String, Integer> categoryIDMapping;
+
+    // questions in a user's quiz
     List<Question> quizQuestions;
 
     // references to spinners
@@ -135,13 +136,12 @@ public class DashboardActivity extends AppCompatActivity {
             // this is the url we want to use to fetch the questions
             String url = generateRequestURL(categorySpinnerEntry, difficultySpinnerEntry, typeSpinnerEntry);
 
-            Log.i("BEOFRE RESULT", url);
-
             apiRequestHelper.getQuestionsForQuiz(url, new APIRequestHelper.APIRequestCallback() {
                 @Override
                 public void onCallbackQuiz(List<Question> quiz) {
                     quizQuestions = quiz;
-                    // log questions
+
+                    // TODO: REPLACE WITH OTHER TASK
                     Log.i("QUIZ", Arrays.deepToString(quiz.toArray()));
 
                     if (quiz.size() == 0) {
@@ -167,7 +167,6 @@ public class DashboardActivity extends AppCompatActivity {
         // url
         String url = "https://opentdb.com/api.php?amount=10&";
 
-        Log.i("IN GENERATE", String.valueOf(categoryIDMapping.size()));
         // add to url
         if (!category.equals("Any Category")) {
             // here we don't want the category name, but its respective ID

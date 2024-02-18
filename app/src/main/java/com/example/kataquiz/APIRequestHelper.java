@@ -148,7 +148,6 @@ public class APIRequestHelper {
                         // create question and add it to the list
                         questionsInQuiz.add(new Question(type, difficulty, category, questionContent, correctAnswer, incorrectAnswers));
 
-                        Log.i("IN API", String.valueOf(questionsInQuiz.size()));
                     }
 
                     callback.onCallbackQuiz(questionsInQuiz);
@@ -169,11 +168,11 @@ public class APIRequestHelper {
         // add to request queue
         requestQueue.add(request);
 
-        Log.i("IN API BEFORE RETURN", String.valueOf(questionsInQuiz.size()));
         return questionsInQuiz;
 
     }
 
+    // interface for callback to handle asynch nature of Volley tasks
     public interface APIRequestCallback {
         default void onCallbackMapping(Map<String, Integer> mapping){}
 
