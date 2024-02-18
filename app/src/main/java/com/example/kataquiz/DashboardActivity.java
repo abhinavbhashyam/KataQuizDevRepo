@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +36,20 @@ public class DashboardActivity extends AppCompatActivity {
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to DB layer
     TextView displayWelcomeTV;  // reference to UI element
+
+    // mapping from ID of category to category name
+    String categoriesJsonString = "{\"trivia_categories\":[{\"id\":9,\"name\":\"General Knowledge\"}," +
+            "{\"id\":10,\"name\":\"Entertainment: Books\"},{\"id\":11,\"name\":\"Entertainment: Film\"}," +
+            "{\"id\":12,\"name\":\"Entertainment: Music\"},{\"id\":13,\"name\":\"Entertainment: Musicals & Theatres\"}" +
+            ",{\"id\":14,\"name\":\"Entertainment: Television\"},{\"id\":15,\"name\":\"Entertainment: Video Games\"}," +
+            "{\"id\":16,\"name\":\"Entertainment: Board Games\"},{\"id\":17,\"name\":\"Science & Nature\"}," +
+            "{\"id\":18,\"name\":\"Science: Computers\"},{\"id\":19,\"name\":\"Science: Mathematics\"}," +
+            "{\"id\":20,\"name\":\"Mythology\"},{\"id\":21,\"name\":\"Sports\"},{\"id\":22,\"name\":\"Geography\"}," +
+            "{\"id\":23,\"name\":\"History\"},{\"id\":24,\"name\":\"Politics\"},{\"id\":25,\"name\":\"Art\"}," +
+            "{\"id\":26,\"name\":\"Celebrities\"},{\"id\":27,\"name\":\"Animals\"},{\"id\":28,\"name\":\"Vehicles\"}," +
+            "{\"id\":29,\"name\":\"Entertainment: Comics\"},{\"id\":30,\"name\":\"Science: Gadgets\"}," +
+            "{\"id\":31,\"name\":\"Entertainment: Japanese Anime & Manga\"}," +
+            "{\"id\":32,\"name\":\"Entertainment: Cartoon & Animations\"}]}";
 
     // reference to API request layer
     APIRequestHelper apiRequestHelper;
@@ -88,12 +106,11 @@ public class DashboardActivity extends AppCompatActivity {
         displayWelcomeTV = findViewById(R.id.displayWelcomeTV);
 
         // retrieve the mapping from categories to their ID (used in the process of generating URL)
-        apiRequestHelper.getCategoryIDMapping(new APIRequestHelper.APIRequestCallback() {
-            @Override
-            public void onCallbackMapping(Map<String, Integer> mapping) {
-                categoryIDMapping = mapping;
-            }
-        });
+        try {
+            categoryIDMapping = getCategoryIDMapping(categoriesJsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // get the uid of the currently signed in user
         String uid = firebaseHelper.getmAuth().getCurrentUser().getUid();
@@ -136,12 +153,14 @@ public class DashboardActivity extends AppCompatActivity {
             // this is the url we want to use to fetch the questions
             String url = generateRequestURL(categorySpinnerEntry, difficultySpinnerEntry, typeSpinnerEntry);
 
+            Log.i("AFTER URL", url);
+
             apiRequestHelper.getQuestionsForQuiz(url, new APIRequestHelper.APIRequestCallback() {
                 @Override
                 public void onCallbackQuiz(List<Question> quiz) {
                     quizQuestions = quiz;
 
-                    // TODO: REPLACE WITH OTHER TASK
+                    // TODO: change this to next task
                     Log.i("QUIZ", Arrays.deepToString(quiz.toArray()));
 
                     if (quiz.size() == 0) {
@@ -216,6 +235,32 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Will return a mapping from category names to their respective category IDs
+     * @param json json of the mapping (from API) as string
+     * @return a mapping from category names to their respective category IDs
+     * *note* exception will never be thrown
+     */
+    private Map<String, Integer> getCategoryIDMapping(String json) throws JSONException {
+        // initialize result
+        Map<String, Integer> categoryMapping = new HashMap<>();
+
+        // convert String to JSON object
+        JSONObject mappingAsJSON = new JSONObject(json);
+
+        JSONArray categories = (JSONArray) mappingAsJSON.get("trivia_categories");
+
+        // loop over each category (which is of type JSONObject)
+        for (int i = 0; i < categories.length(); i++) {
+            JSONObject currCategory = (JSONObject) categories.get(i);
+
+            // add to our mapping
+            categoryMapping.put((String) currCategory.get("name"), (Integer) currCategory.get("id"));
+        }
+
+        return categoryMapping;
     }
 
 }

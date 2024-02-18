@@ -35,62 +35,11 @@ public class APIRequestHelper {
     }
 
     /**
-     * Returns a mapping of category names to category IDs, used in the process of assembling URL
-     * (that is used to generate questions)
-     * @return a mapping of category names to category IDs, used in the process of assembling URL
-     * (that is used to generate questions)
-     */
-    public Map<String, Integer> getCategoryIDMapping(APIRequestCallback callback) {
-        // url that helps us access categories and their respective IDs
-        String url = "https://opentdb.com/api_category.php";
-
-        // mapping of category names to category ID
-        Map<String, Integer> categoryMapping = new HashMap<String, Integer>();
-
-        // request for data (GET request)
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    // get access to the array of categories
-                    JSONArray categories = (JSONArray) response.get("trivia_categories");
-
-                    // loop over each category (which is of type JSONObject)
-                    for (int i = 0; i < categories.length(); i++) {
-                        JSONObject currCategory = (JSONObject) categories.get(i);
-
-                        // add to our mapping
-                        categoryMapping.put((String) currCategory.get("name"), (Integer) currCategory.get("id"));
-                    }
-
-                    callback.onCallbackMapping(categoryMapping);
-
-                } catch (Exception e) {
-                    // in case of error
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // in case of error
-                error.printStackTrace();
-            }
-        });
-
-        // add to request queue
-        requestQueue.add(request);
-
-        // return result
-        return categoryMapping;
-    }
-
-    /**
-     * Retrieves the questions for a specific quiz from the API
+     * Finds the questions for a specific quiz from the API
      * @param url the url we are using to access the questions
-     * @return the questions for a specific quiz
+     * @param callback callback used to manage asynch nature of Volley
      */
-    public List<Question> getQuestionsForQuiz(String url, APIRequestCallback callback) {
+    public void getQuestionsForQuiz(String url, APIRequestCallback callback) {
         List<Question> questionsInQuiz = new ArrayList<>();
 
         // request for data (GET request)
@@ -168,15 +117,11 @@ public class APIRequestHelper {
         // add to request queue
         requestQueue.add(request);
 
-        return questionsInQuiz;
-
     }
 
     // interface for callback to handle asynch nature of Volley tasks
     public interface APIRequestCallback {
-        default void onCallbackMapping(Map<String, Integer> mapping){}
-
-        default void onCallbackQuiz(List<Question> quiz){}
+        void onCallbackQuiz(List<Question> quiz);
     }
 
 }
