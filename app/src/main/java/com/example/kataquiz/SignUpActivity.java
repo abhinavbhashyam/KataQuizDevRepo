@@ -3,6 +3,8 @@ package com.example.kataquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
-
-// TODO: CHANGE RULE FOR DATABASE ACCESS
 
 /**
  * This class is used to sign up a User and add them to our database
@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             + " " + lastName + "!", Toast.LENGTH_SHORT).show();
 
                                     // take to appropriate screen after sign up/login
-                                    startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                                    new Navigation().takeToDashboard(SignUpActivity.this);
                                 } else {
                                     // user was not created successfully (usually due to duplicate email)
                                     Log.d(TAG, "Sign up unsuccessful");
@@ -104,4 +104,5 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
     }
+
 }

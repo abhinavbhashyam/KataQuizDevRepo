@@ -41,7 +41,7 @@ public class SignInActivity extends AppCompatActivity {
 
         // current user is already signed in, take them to dashboard
         if (firebaseHelper.getmAuth().getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+            new Navigation().takeToDashboard(SignInActivity.this);
         }
     }
 
@@ -67,7 +67,7 @@ public class SignInActivity extends AppCompatActivity {
                                 // if sign in successful
                                 Toast.makeText(getApplicationContext(), "Sign in successful!",
                                         Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                                new Navigation().takeToDashboard(SignInActivity.this);
                             } else {
                                 // else sign in failed
                                 Log.d(TAG, "Failed to log in with email " + email + task.getException());
