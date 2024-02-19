@@ -70,9 +70,6 @@ public class DashboardActivity extends AppCompatActivity {
     // mapping so we can figure out the category ID from the category name
     Map<String, Integer> categoryIDMapping;
 
-    // questions in a user's quiz
-    List<Question> quizQuestions;
-
     // references to spinners
     TextInputLayout categorySpinner;
     TextInputLayout difficultySpinner;
@@ -158,12 +155,12 @@ public class DashboardActivity extends AppCompatActivity {
             apiRequestHelper.getQuestionsForQuiz(url, new APIRequestHelper.APIRequestCallback() {
                 @Override
                 public void onCallbackQuiz(List<Question> quiz) {
-                    quizQuestions = quiz;
+                    List<Question> quizQuestions = quiz;
 
                     // TODO: change this to next task
-                    Log.i("QUIZ", Arrays.deepToString(quiz.toArray()));
+                    Log.i("QUIZ", Arrays.deepToString(quizQuestions.toArray()));
 
-                    if (quiz.size() == 0) {
+                    if (quizQuestions.size() == 0) {
                         Toast.makeText(getApplicationContext(), "Try different settings! There were no " +
                                         "questions for the settings you selected.",
                                 Toast.LENGTH_SHORT).show();
