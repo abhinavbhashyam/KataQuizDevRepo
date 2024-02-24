@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
+import org.checkerframework.checker.units.qual.N;
+
 /**
  * Landing page; either signs in a specific user or takes them to sign up
  */
@@ -22,9 +24,9 @@ public class SignInActivity extends AppCompatActivity {
     // references to UI components
     EditText emailET, passwordET;
 
-    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to database layer
+    FirebaseHelper firebaseHelper;   // reference to database layer
 
-    NavigationHelper navigationHelper = new NavigationHelper(); // reference to Navigation helper class
+    NavigationHelper navigationHelper; // reference to Navigation helper class
 
     private final String TAG = "SignInActivity"; // tag for Logs
 
@@ -36,6 +38,12 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        // initialize reference to DB layer
+        firebaseHelper = new FirebaseHelper();
+
+        // initialize reference to Navigation helper class
+        navigationHelper = new NavigationHelper();
 
         // initialize UI elements
         emailET = findViewById(R.id.signInEmailET);

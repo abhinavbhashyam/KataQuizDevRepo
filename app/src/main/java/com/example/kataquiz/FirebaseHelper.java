@@ -86,7 +86,7 @@ public class FirebaseHelper {
      *
      */
     public interface FirestoreUserCallback {
-        default void onCallbackReadUser(User u) {}
+        default void onCallbackReadUser(User currUser) {}
 
     }
 }

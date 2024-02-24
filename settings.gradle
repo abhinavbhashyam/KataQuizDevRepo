@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" } // for yuyakaido:cardstackview
     }
 }
 rootProject.name = "KataQuiz"

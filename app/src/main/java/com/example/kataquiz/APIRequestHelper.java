@@ -1,7 +1,6 @@
 package com.example.kataquiz;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,10 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Helper class that manages all interaction with API (fetching/retrieving data)
@@ -121,7 +117,7 @@ public class APIRequestHelper {
 
     // interface for callback to handle asynch nature of Volley tasks
     public interface APIRequestCallback {
-        void onCallbackQuiz(List<Question> quiz);
+        void onCallbackQuiz(List<Question> questionsForQuiz);
     }
 
 }

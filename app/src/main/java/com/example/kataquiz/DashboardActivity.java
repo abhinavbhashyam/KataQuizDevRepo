@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
@@ -22,8 +23,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +35,10 @@ import java.util.Map;
  */
 public class DashboardActivity extends AppCompatActivity {
 
-    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to DB layer
-    TextView displayWelcomeTV;  // reference to UI element
+    FirebaseHelper firebaseHelper;   // reference to DB layer
+
+    // reference to API request layer
+    APIRequestHelper apiRequestHelper;
 
     // mapping from ID of category to category name
     String categoriesJsonString = "{\"trivia_categories\":[{\"id\":9,\"name\":\"General Knowledge\"}," +
@@ -51,8 +54,6 @@ public class DashboardActivity extends AppCompatActivity {
             "{\"id\":31,\"name\":\"Entertainment: Japanese Anime & Manga\"}," +
             "{\"id\":32,\"name\":\"Entertainment: Cartoon & Animations\"}]}";
 
-    // reference to API request layer
-    APIRequestHelper apiRequestHelper;
 
     // arrays for the different items that appear under the spinners
     String[] categories = {"Any Category", "General Knowledge", "Entertainment: Books",
@@ -70,6 +71,8 @@ public class DashboardActivity extends AppCompatActivity {
     // mapping so we can figure out the category ID from the category name
     Map<String, Integer> categoryIDMapping;
 
+    TextView displayWelcomeTV;  // reference to UI element
+
     // references to spinners
     TextInputLayout categorySpinner;
     TextInputLayout difficultySpinner;
@@ -85,6 +88,9 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        // initialize main DB helper class reference
+        firebaseHelper = new FirebaseHelper();
 
         // initialize API helper class reference
         apiRequestHelper = new APIRequestHelper(DashboardActivity.this);
@@ -115,10 +121,7 @@ public class DashboardActivity extends AppCompatActivity {
         // read the data corresponding to this user
         firebaseHelper.readUser(uid, new FirebaseHelper.FirestoreUserCallback() {
             @Override
-            public void onCallbackReadUser(User u) {
-                // get current user
-                User currentUser = u;
-
+            public void onCallbackReadUser(User currentUser) {
                 // display welcome message
                 String welcomeMessage = "Welcome, " + currentUser.getFirstName() + " " + currentUser.getLastName() + "!";
 
@@ -150,20 +153,16 @@ public class DashboardActivity extends AppCompatActivity {
             // this is the url we want to use to fetch the questions
             String url = generateRequestURL(categorySpinnerEntry, difficultySpinnerEntry, typeSpinnerEntry);
 
-            Log.i("AFTER URL", url);
-
             apiRequestHelper.getQuestionsForQuiz(url, new APIRequestHelper.APIRequestCallback() {
                 @Override
-                public void onCallbackQuiz(List<Question> quiz) {
-                    List<Question> quizQuestions = quiz;
-
-                    // TODO: change this to next task
-                    Log.i("QUIZ", Arrays.deepToString(quizQuestions.toArray()));
-
+                public void onCallbackQuiz(List<Question> quizQuestions) {
                     if (quizQuestions.size() == 0) {
                         Toast.makeText(getApplicationContext(), "Try different settings! There were no " +
                                         "questions for the settings you selected.",
                                 Toast.LENGTH_SHORT).show();
+                    } else {
+                        // otherwise, we are ready to display quiz
+                        takeToQuizActivity(quizQuestions);
                     }
 
                 }
@@ -172,6 +171,25 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Brings us to the activity where the user will take quiz
+     * @param questionsForQuiz questions that will compose the user's quiz
+     */
+    private void takeToQuizActivity(List<Question> questionsForQuiz) {
+        // we want to have the user take their quiz
+        Intent intent = new Intent(getApplicationContext(), TakeQuizActivity.class);
+
+        // we will use a Bundle object to send our Questions to the next screen
+        Bundle bundle = new Bundle();
+
+
+        bundle.putParcelableArrayList("QUIZ_QUESTIONS", (ArrayList<? extends Parcelable>) questionsForQuiz);
+
+        // put this Bundle in the Intent, and send to TakeQuizActivity
+        intent.putExtra("QUIZ_QUESTIONS", bundle);
+        startActivity(intent);
+
+    }
     /**
      * Helper method to generate the URL that retrieves the questions in a user's quiz
      * @param category the category the user selected

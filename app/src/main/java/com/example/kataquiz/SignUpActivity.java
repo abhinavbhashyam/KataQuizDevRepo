@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
  * This class is used to sign up a User and add them to our database
  */
 public class SignUpActivity extends AppCompatActivity {
-    NavigationHelper navigationHelper = new NavigationHelper(); // reference to Navigation helper class
+    NavigationHelper navigationHelper; // reference to Navigation helper class
 
     // get references to UI elements
     private EditText emailET, passwordET, firstNameET, lastNameET;
@@ -37,6 +37,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        // initialize reference to navigation helper class
+        navigationHelper = new NavigationHelper();
 
         // initialize references to UI
         emailET = findViewById(R.id.emailET);

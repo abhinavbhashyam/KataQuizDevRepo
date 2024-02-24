@@ -27,6 +27,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -43,6 +46,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.github.yuyakaido:cardstackview:2.3.4'
+    implementation 'io.grpc:grpc-android:1.57.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
