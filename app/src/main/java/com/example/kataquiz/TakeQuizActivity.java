@@ -3,6 +3,7 @@ package com.example.kataquiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kataquiz.databinding.ActivityTakeQuizBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
@@ -17,30 +18,24 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Spinner;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Handles the activities of the TakeQuizActivity
  */
 public class TakeQuizActivity extends AppCompatActivity implements CardStackListener {
-
-    // reference to Spinner on UI
-    Spinner answerSpinner;
-
-    List<Question> cardList = new ArrayList<>();
-
     ActivityTakeQuizBinding binding;    // allows us to easily reference UI components for this activity
 
     CardStackLayoutManager manager;     // manager for layout of card stack
 
-    List<Question> wrong = new ArrayList<>();   // list of questions the quiz taker got wrong
+    List<Question> wrongQuestions = new ArrayList<>();   // list of questions the quiz taker got wrong
 
     MCQuestionCardAdapter mcQuestionCardAdapter;    // reference to custom adapter for card
                                                     // (allows us to bind data to each card)
@@ -55,6 +50,13 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
 
     // formatting tool for timer
     SimpleDateFormat timerFormat = new SimpleDateFormat("mm:ss");
+
+    // reference to spinner
+    TextInputLayout answerSpinner;
+
+    // list of questions in the quiz
+    List<Question> quizQuestions = new ArrayList<>();
+
 
     /**
      * Manages all action when screen is loaded in/created
@@ -72,18 +74,16 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
         // initialize cardstack layout manager
         manager = new CardStackLayoutManager(this, this);
         manager.setStackFrom(StackFrom.Top);    // set appearence of stack
-        manager.setVisibleCount(3);    // 3 cards visible at a time
+        manager.setVisibleCount(2);    // 1 card visible at a time
         manager.setDirections(Direction.HORIZONTAL);    // swiping horizontally
         manager.setCanScrollVertical(false);    // cannot scroll vertically
 
         // we need to retrieve the questions that were sent from the previous screen
         Bundle extras = getIntent().getBundleExtra("QUIZ_QUESTIONS");
-        ArrayList<Question> questionsForQuiz = extras.getParcelableArrayList("QUIZ_QUESTIONS");
-
-        Log.i("TEST INTENT", String.valueOf(questionsForQuiz.size()));
+        quizQuestions = extras.getParcelableArrayList("QUIZ_QUESTIONS");
 
         // initialize the card stack view with the appropriate questions
-        mcQuestionCardAdapter = new MCQuestionCardAdapter(questionsForQuiz);
+        mcQuestionCardAdapter = new MCQuestionCardAdapter(quizQuestions, TakeQuizActivity.this);
         binding.cardStack.setLayoutManager(manager);
         binding.cardStack.setHasFixedSize(true);    // size of card doesn't change
         binding.cardStack.setAdapter(mcQuestionCardAdapter);
@@ -118,8 +118,13 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
      */
     @Override
     public void onCardAppeared(View view, int position) {
+        // enable spinner on card appearence
+        AutoCompleteTextView currCardSpinner = view.findViewById(R.id.answerTV);
+
+        currCardSpinner.setEnabled(true);
+
         // get reference to the timer
-        cardTimerTV = view.findViewById(R.id.mcTimerTV);
+        cardTimerTV = view.findViewById(R.id.timerTV);
 
         // we have an animation for the timer when its running out
         Animation a = AnimationUtils.loadAnimation(this, R.anim.blink);
@@ -162,6 +167,68 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
 
     @Override
     public void onCardDisappeared(View view, int position) {
+        // get reference to relevant UI element (spinner)
+        answerSpinner = view.findViewById(R.id.answerSP);
+
+        // current question in quiz
+        Question currentQuestion = quizQuestions.get(position);
+
+        if (!answerSpinner.getEditText().getText().toString().isEmpty()) {
+            // character corresponding to selected choice
+            char selectedOption = answerSpinner.getEditText().getText().toString().charAt(0);
+
+            String selectedAnswer = "";
+
+            switch (selectedOption) {
+                // if A is selected
+                case 'A':
+                    // want to get the answer that corresponds to that choice
+                    EditText answer1ET = view.findViewById(R.id.answer1ET);
+                    selectedAnswer = answer1ET.getText().toString();
+                    break;
+                // if B is selected
+                case 'B':
+                    // want to get the answer that corresponds to that choice
+                    EditText answer2ET = view.findViewById(R.id.answer2ET);
+                    selectedAnswer = answer2ET.getText().toString();
+                    break;
+                // if C is selected
+                case 'C':
+                    // want to get the answer that corresponds to that choice
+                    EditText answer3ET = view.findViewById(R.id.answer3ET);
+                    selectedAnswer = answer3ET.getText().toString();
+                    break;
+                // if D is selected
+                case 'D':
+                    // want to get the answer that corresponds to that choice
+                    EditText answer4ET = view.findViewById(R.id.answer4ET);
+                    selectedAnswer = answer4ET.getText().toString();
+                    break;
+            }
+
+            // correct answer
+            String correctAnswer = currentQuestion.getCorrectAnswer();
+
+            // user selected incorrect answer for question
+            if (!selectedAnswer.equals(correctAnswer)) {
+                // add to our list of wrong questions
+                wrongQuestions.add(currentQuestion);
+
+                // display popup
+                Toast.makeText(getApplicationContext(), "Incorrect!",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // display popup
+                Toast.makeText(getApplicationContext(), "Correct!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // user did not select an answer, so they are wrong
+            wrongQuestions.add(currentQuestion);
+
+            Toast.makeText(getApplicationContext(), "Incorrect, no option chosen!", Toast.LENGTH_SHORT).show();
+        }
+
         cdt.cancel(); // cancel timer; card has been swiped
     }
 }

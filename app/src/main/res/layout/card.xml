@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mcTimerTV"
+            app:layout_constraintTop_toBottomOf="@+id/timerTV"
             app:layout_constraintVertical_bias="0.35000002">
 
             <LinearLayout
@@ -212,7 +212,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/mcTimerTV"
+            android:id="@+id/timerTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="3dp"
@@ -220,16 +220,16 @@
             android:textAlignment="center"
             android:textColor="@color/green"
             android:textSize="34sp"
-            android:textStyle="italic"
+            android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mcCardQuestionNameTV"
-            app:layout_constraintVertical_bias="0.015" />
+            app:layout_constraintTop_toBottomOf="@+id/cardQuestionNameTV"
+            app:layout_constraintVertical_bias="0.034" />
 
         <TextView
-            android:id="@+id/mcCardQuestionNameTV"
+            android:id="@+id/cardQuestionNameTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
@@ -247,42 +247,39 @@
 
 
         <ProgressBar
-            android:id="@+id/progressMC"
+            android:id="@+id/progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="158dp"
             android:layout_height="25dp"
             android:padding="20dp"
             android:scrollbarSize="15dp"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/mcCardQuestionNameTV"
+            app:layout_constraintBottom_toTopOf="@+id/cardQuestionNameTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/mcAnswerSelectSP"
-            android:layout_width="289dp"
-            android:layout_height="45dp"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answerSP"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="287dp"
+            android:layout_height="62dp"
+            android:layout_margin="30dp"
+            android:hint="Select an answer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.369" />
+            app:layout_constraintVertical_bias="0.38">
 
-        <TextView
-            android:id="@+id/mcAnswerSelectTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Answer:"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@+id/mcAnswerSelectSP"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.757" />
+            <AutoCompleteTextView
+                android:id="@+id/answerTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
