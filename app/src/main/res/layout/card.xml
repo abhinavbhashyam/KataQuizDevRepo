@@ -40,7 +40,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timerTV"
-            app:layout_constraintVertical_bias="0.35000002">
+            app:layout_constraintVertical_bias="0.120000005">
 
             <LinearLayout
                 android:id="@+id/answer1HorLinearLayout"
@@ -215,18 +215,18 @@
             android:id="@+id/timerTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="3dp"
+            android:layout_marginTop="10dp"
+            android:paddingTop="7dp"
             android:text="1:00"
             android:textAlignment="center"
             android:textColor="@color/green"
-            android:textSize="34sp"
+            android:textSize="24sp"
             android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardQuestionNameTV"
-            app:layout_constraintVertical_bias="0.034" />
+            app:layout_constraintVertical_bias="0.054" />
 
         <TextView
             android:id="@+id/cardQuestionNameTV"
@@ -257,7 +257,8 @@
             app:layout_constraintBottom_toTopOf="@+id/cardQuestionNameTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.53" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -267,11 +268,12 @@
             android:layout_height="62dp"
             android:layout_margin="30dp"
             android:hint="Select an answer"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.38">
+            app:layout_constraintVertical_bias="0.19">
 
             <AutoCompleteTextView
                 android:id="@+id/answerTV"
@@ -280,6 +282,22 @@
                 android:inputType="none"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/displayDiffAndCategoryTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/timerTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardQuestionNameTV" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

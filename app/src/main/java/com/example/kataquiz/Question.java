@@ -31,8 +31,8 @@ public class Question implements Parcelable {
      * Default constructor
      */
     public Question() {
-
     }
+
     /**
      * Constructor for a Question object
      * @param type mc or true/false
@@ -194,6 +194,8 @@ public class Question implements Parcelable {
     public Question(Parcel parcel) {
         question = parcel.readString();
         type = Type.valueOf(parcel.readString());
+        category = parcel.readString();
+        difficulty = Difficulty.valueOf(parcel.readString());
         correctAnswer = parcel.readString();
         incorrectAnswers = parcel.createStringArrayList();
     }
@@ -218,6 +220,8 @@ public class Question implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(question);
         dest.writeString(type.name());
+        dest.writeString(category);
+        dest.writeString(difficulty.name());
         dest.writeString(correctAnswer);
         dest.writeStringList(incorrectAnswers);
     }

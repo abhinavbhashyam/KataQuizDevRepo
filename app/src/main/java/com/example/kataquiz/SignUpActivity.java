@@ -24,9 +24,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     // get references to UI elements
     private EditText emailET, passwordET, firstNameET, lastNameET;
-    private Switch isSharing; // TODO: take to correct screen depending on value
 
-    FirebaseHelper firebaseHelper = new FirebaseHelper();   // reference to class that interacts w/ DB
+    FirebaseHelper firebaseHelper;   // reference to class that interacts w/ DB
 
     private final String TAG = "SignUpActivity";    // needed for Log messages
     /**
@@ -40,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         // initialize reference to navigation helper class
         navigationHelper = new NavigationHelper();
+
+        firebaseHelper = new FirebaseHelper(); // initialize DB reference
 
         // initialize references to UI
         emailET = findViewById(R.id.emailET);

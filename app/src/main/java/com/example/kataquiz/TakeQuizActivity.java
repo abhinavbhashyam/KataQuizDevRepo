@@ -9,12 +9,13 @@ import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -37,7 +38,7 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
 
     List<Question> wrongQuestions = new ArrayList<>();   // list of questions the quiz taker got wrong
 
-    MCQuestionCardAdapter mcQuestionCardAdapter;    // reference to custom adapter for card
+    QuestionCardAdapter mcQuestionCardAdapter;    // reference to custom adapter for card
                                                     // (allows us to bind data to each card)
     CountDownTimer cdt;   // manager for count down timer that is on each card
 
@@ -49,7 +50,7 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
     long intervalSeconds = 1;   // counts down every second
 
     // formatting tool for timer
-    SimpleDateFormat timerFormat = new SimpleDateFormat("mm:ss");
+    SimpleDateFormat timerFormat = new SimpleDateFormat("m:ss");
 
     // reference to spinner
     TextInputLayout answerSpinner;
@@ -83,7 +84,7 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
         quizQuestions = extras.getParcelableArrayList("QUIZ_QUESTIONS");
 
         // initialize the card stack view with the appropriate questions
-        mcQuestionCardAdapter = new MCQuestionCardAdapter(quizQuestions, TakeQuizActivity.this);
+        mcQuestionCardAdapter = new QuestionCardAdapter(quizQuestions, TakeQuizActivity.this);
         binding.cardStack.setLayoutManager(manager);
         binding.cardStack.setHasFixedSize(true);    // size of card doesn't change
         binding.cardStack.setAdapter(mcQuestionCardAdapter);
@@ -229,6 +230,34 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
             Toast.makeText(getApplicationContext(), "Incorrect, no option chosen!", Toast.LENGTH_SHORT).show();
         }
 
+        // if we reached last card
+        if (position == quizQuestions.size() - 1) {
+            Toast.makeText(getApplicationContext(), "You finished the quiz!", Toast.LENGTH_SHORT).show();
+            if (wrongQuestions.size() != 0) {
+                takeToPostQuizActivity(wrongQuestions);
+            } else {
+                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                Toast.makeText(getApplicationContext(), "You got a perfect score! You will be " +
+                        "taken back to the generate quiz screen momentarily.", Toast.LENGTH_LONG).show();
+            }
+        }
         cdt.cancel(); // cancel timer; card has been swiped
+    }
+
+    /**
+     * Helper method to take us to the post quiz activity
+     * @param wrongQuestions questions the user got wrong in their quiz
+     */
+    private void takeToPostQuizActivity(List<Question> wrongQuestions) {
+        // intent taking us to the PostQuizActivity
+        Intent intent = new Intent(getApplicationContext(), PostQuizActivity.class);
+
+        // using Bundle to send over questions
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("INCORRECT_QUESTIONS", (ArrayList<? extends Parcelable>) wrongQuestions);
+
+        // put Bundle into Intent
+        intent.putExtra("INCORRECT_QUESTIONS", bundle);
+        startActivity(intent);
     }
 }

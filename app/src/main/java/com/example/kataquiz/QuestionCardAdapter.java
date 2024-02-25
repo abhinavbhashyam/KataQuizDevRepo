@@ -15,11 +15,12 @@ import com.example.kataquiz.databinding.CardBinding;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Adapter allowing us to generate our card stack
  */
-public class MCQuestionCardAdapter extends RecyclerView.Adapter<MCQuestionCardAdapter.myViewHolder> {
+public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapter.myViewHolder> {
     List<Question> questionList; // the list of Questions to display
     Activity displayingActivity;    // activity on which card stack is being displayed
 
@@ -28,7 +29,7 @@ public class MCQuestionCardAdapter extends RecyclerView.Adapter<MCQuestionCardAd
      * @param questionList list of Questions to display within card stack
      * @param displayingActivity the activity on which card stack is being displayed
      */
-    public MCQuestionCardAdapter(List<Question> questionList, Activity displayingActivity) {
+    public QuestionCardAdapter(List<Question> questionList, Activity displayingActivity) {
         this.questionList = questionList;
         this.displayingActivity = displayingActivity;
     }
@@ -41,7 +42,7 @@ public class MCQuestionCardAdapter extends RecyclerView.Adapter<MCQuestionCardAd
      */
     @NonNull
     @Override
-    public MCQuestionCardAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public QuestionCardAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater li = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         CardBinding binding = CardBinding.inflate(li);
         return new myViewHolder(binding);
@@ -53,13 +54,18 @@ public class MCQuestionCardAdapter extends RecyclerView.Adapter<MCQuestionCardAd
      * @param position index in list of cards
      */
     @Override
-    public void onBindViewHolder(@NonNull MCQuestionCardAdapter.myViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QuestionCardAdapter.myViewHolder holder, int position) {
         Question cardItem = questionList.get(position);
 
         // set UI elements accordingly
         holder.binding.progress.setMax(questionList.size());
         holder.binding.progress.setProgress(position + 1);
         holder.binding.cardQuestionNameTV.setText(cardItem.getQuestion());
+
+        String difficultyString = cardItem.getDifficulty().toString().toLowerCase();
+
+        holder.binding.displayDiffAndCategoryTV.setText(cardItem.getCategory() + " - " +
+                difficultyString.substring(0, 1).toUpperCase() + difficultyString.substring(1));
 
         // adapter to help us populate the spinners
         ArrayAdapter<String> adapter;
