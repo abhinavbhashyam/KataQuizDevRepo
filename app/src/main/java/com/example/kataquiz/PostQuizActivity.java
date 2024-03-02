@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -19,6 +20,10 @@ import java.util.List;
 public class PostQuizActivity extends AppCompatActivity {
 
     TextView postQuizInfoTV;    // ref to topmost textview on display
+
+    ListView wrongQuestionsListView;  // reference to list view containing wrong questions
+
+    ArrayAdapter<Question> listAdapter; // ref to adapter for list view
 
     /**
      * Populates listview with the questions the user got wrong
@@ -37,14 +42,14 @@ public class PostQuizActivity extends AppCompatActivity {
         List<Question> wrongQuestions = extras.getParcelableArrayList("INCORRECT_QUESTIONS");
 
         // display all wrong questions in a list view
-        ArrayAdapter<Question> listAdapter = new QuestionListAdapter(
+        listAdapter = new QuestionListAdapter(
                 getApplicationContext(), wrongQuestions);
 
 
-        ListView listView = (ListView) findViewById(R.id.wrongQuestionsLV);
-        listView.setAdapter(listAdapter);
+        wrongQuestionsListView = (ListView) findViewById(R.id.wrongQuestionsLV);
+        wrongQuestionsListView.setAdapter(listAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        wrongQuestionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             // user can click on individual questions they got wrong
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
