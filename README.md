@@ -1,6 +1,6 @@
 # Kata - Quiz
 For the take-home Kata assessment, I chose the Quiz option (i.e. option #1). In addition to implementing the required features, I chose to extend my implementation by adding additional features such as timers, progress bars, and a card-swiping mechanism that adds an extra layer of "fun"
-to the user's quiz-taking process. This application was built using Android Studio and Java, and uses Firebase's Firestore and Authentication services to facliliate the storage of user data and their ability to authenticate with the application. Questions are fetched from the Open Trivia Database (https://opentdb.com/).
+to the user's quiz-taking process. This application was built using Android Studio and Java, and uses Firebase's Firestore and Authentication services to facliliate the storage of user data and their ability to authenticate with the application. Questions are fetched from the Open Trivia Database. A link to the database can be found here: https://opentdb.com/. Additionally, all of the source code for this application has been documented with Javadoc documentation, and can be found in this repository.
 
 ## Testing the App
 There are multiple ways to test this application: 
@@ -9,8 +9,6 @@ There are multiple ways to test this application:
   3. If the above two options don't work, I have created a small demonstration video of some of the main features of the application in action. You can find the video right below (note: the video does not demonstrate the procedure for signing up; I filmed the video after signing up a user account).
 
 https://github.com/abhinavbhashyam/KataQuizDevRepo/assets/84284109/5a22cdb6-9c93-47bf-be0a-65543f7023de
-
-Additionally, all of the source code for this application has been documented with Javadoc documentation, and can be found in this repository.
 
 ## Final Notes
 For the card stack structure in my application, I used the following library: https://github.com/yuyakaido/CardStackView.
