@@ -19,6 +19,9 @@ public class ViewQuestionActivity extends AppCompatActivity {
 
     TextView answer1TV, answer3TV, answer4TV;
 
+    // reference to navigation class
+    NavigationHelper navigationHelper;
+
     // question that the user has chosen to view (from previous screen)
     Question selectedQuestion;
 
@@ -26,6 +29,9 @@ public class ViewQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_question);
+
+        // initialize reference to navigation class
+        navigationHelper = new NavigationHelper();
 
         // initialize UI references
         questionNameTV = findViewById(R.id.pqQuestionNameTV);
@@ -47,12 +53,8 @@ public class ViewQuestionActivity extends AppCompatActivity {
         // set UI appropriately
         questionNameTV.setText(selectedQuestion.getQuestion());
 
-        // enum difficulty into proper formatted string
-        String difficultyString = selectedQuestion.getDifficulty().toString().toLowerCase();
-
         // initialize category content textview
-        questionDiffAndCategoryTV.setText(selectedQuestion.getCategory() + " - " +
-                difficultyString.substring(0, 1).toUpperCase() + difficultyString.substring(1));
+        questionDiffAndCategoryTV.setText(navigationHelper.createCategoryDifficultyString(selectedQuestion));
 
         // set UI based on type of question
         if (selectedQuestion.getType() == Type.MULTIPLE_CHOICE) {

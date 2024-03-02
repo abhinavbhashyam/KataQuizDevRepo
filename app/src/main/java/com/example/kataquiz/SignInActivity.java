@@ -19,13 +19,12 @@ import com.google.firebase.auth.AuthResult;
  * Landing page; either signs in a specific user or takes them to sign up
  */
 public class SignInActivity extends AppCompatActivity {
-
-    // references to UI components
-    EditText emailET, passwordET;
-
     FirebaseHelper firebaseHelper;   // reference to database layer
 
     NavigationHelper navigationHelper; // reference to Navigation helper class
+
+    // references to UI components
+    EditText emailET, passwordET;
 
     private final String TAG = "SignInActivity"; // tag for Logs
 

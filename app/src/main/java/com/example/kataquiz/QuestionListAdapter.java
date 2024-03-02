@@ -10,12 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.checkerframework.checker.units.qual.N;
+
 import java.util.List;
 
 /**
  * Custom adapter for our list view
  */
 public class QuestionListAdapter extends ArrayAdapter<Question> {
+    NavigationHelper navigationHelper;  // reference to navigation class
     /**
      * Constructor for custom adapter
      * @param context application context, passed to super constructor
@@ -25,6 +28,7 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
     {
         // call to super constructor
         super(context, 0, questions);
+        navigationHelper = new NavigationHelper();
     }
 
     /**
@@ -51,12 +55,8 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
         // set with name of question
         questionContent.setText(question.getQuestion());
 
-        // enum difficulty into proper formatted string
-        String difficultyString = question.getDifficulty().toString().toLowerCase();
-
         // initialize category content textview
-        categoryContent.setText(question.getCategory() + " - " +
-                difficultyString.substring(0, 1).toUpperCase() + difficultyString.substring(1));
+        categoryContent.setText(navigationHelper.createCategoryDifficultyString(question));
 
         return convertView;
     }

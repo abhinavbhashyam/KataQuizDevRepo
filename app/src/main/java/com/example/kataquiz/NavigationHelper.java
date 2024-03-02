@@ -7,6 +7,7 @@ import android.content.Intent;
 
 /**
  * Helper class that contains methods that are called when user is transitioning between activities
+ * /extra utility methods
  */
 public class NavigationHelper {
     /**
@@ -37,5 +38,19 @@ public class NavigationHelper {
         AlertDialog dialog = builder.create();
 
         dialog.show();
+    }
+
+    /**
+     * Creates a string in the format [category] - [difficulty] for a certain question
+     * @param question the question we are creating the string for
+     * @return the string in the format [category] - [difficulty] for a certain question
+     */
+    public String createCategoryDifficultyString(Question question) {
+        // enum difficulty into proper formatted string
+        String difficultyString = question.getDifficulty().toString().toLowerCase();
+
+        // initialize category content textview
+        return question.getCategory() + " - " + difficultyString.substring(0, 1).toUpperCase() + difficultyString.substring(1);
+
     }
 }

@@ -22,6 +22,7 @@ import java.util.List;
 public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapter.myViewHolder> {
     List<Question> questionList; // the list of Questions to display
     Activity displayingActivity;    // activity on which card stack is being displayed
+    NavigationHelper navigationHelper;  // ref to navigation class
 
     /**
      * Constructor for adapter
@@ -31,6 +32,7 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
     public QuestionCardAdapter(List<Question> questionList, Activity displayingActivity) {
         this.questionList = questionList;
         this.displayingActivity = displayingActivity;
+        this.navigationHelper = new NavigationHelper(); // initialize reference to navigation helper class
     }
 
     /**
@@ -61,10 +63,7 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
         holder.binding.progress.setProgress(position + 1);
         holder.binding.cardQuestionNameTV.setText(cardItem.getQuestion());
 
-        String difficultyString = cardItem.getDifficulty().toString().toLowerCase();
-
-        holder.binding.displayDiffAndCategoryTV.setText(cardItem.getCategory() + " - " +
-                difficultyString.substring(0, 1).toUpperCase() + difficultyString.substring(1));
+        holder.binding.displayDiffAndCategoryTV.setText(navigationHelper.createCategoryDifficultyString(cardItem));
 
         // adapter to help us populate the spinners for answer choices
         ArrayAdapter<String> adapter;
