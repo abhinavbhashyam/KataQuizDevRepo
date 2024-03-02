@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ViewQuestionActivity extends AppCompatActivity {
     // get references to UI elements
@@ -22,6 +21,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
 
     // question that the user has chosen to view (from previous screen)
     Question selectedQuestion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +36,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
         answer3ET = findViewById(R.id.pqAnswer3ET);
         answer4ET = findViewById(R.id.pqAnswer4ET);
 
+        // we won't be needing reference to answer2TV
         answer1TV = findViewById(R.id.pqChoiceATV);
         answer3TV = findViewById(R.id.pqChoiceCTV);
         answer4TV = findViewById(R.id.pqChoiceDTV);
@@ -68,16 +69,11 @@ public class ViewQuestionActivity extends AppCompatActivity {
 
 
         } else {
-            // figure out if true or false was the right answer
-            Boolean correctAnswer = (selectedQuestion.getCorrectAnswer().equals("True")) ? (true) : (false);
-
             // answer1ET will contain the correct answer
-            answer1ET.setText(correctAnswer.toString().substring(0, 1).toUpperCase() +
-                    correctAnswer.toString().substring(1));
+            answer1ET.setText(selectedQuestion.getCorrectAnswer());
 
             // answer2ET contains incorrect answer
-            answer2ET.setText(((Boolean) !correctAnswer).toString().substring(0, 1).toUpperCase() +
-                    ((Boolean)!correctAnswer).toString().substring(1));
+            answer2ET.setText(selectedQuestion.getIncorrectAnswers().get(0));
 
             answer3ET.setVisibility(View.INVISIBLE);
             answer4ET.setVisibility(View.INVISIBLE);

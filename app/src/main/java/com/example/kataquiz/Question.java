@@ -42,7 +42,8 @@ public class Question implements Parcelable {
      * @param correctAnswer single correct answer
      * @param incorrectAnswers list of incorrect answers
      */
-    public Question(Type type, Difficulty difficulty, String category, String question, String correctAnswer, List<String> incorrectAnswers) {
+    public Question(Type type, Difficulty difficulty, String category, String question,
+                    String correctAnswer, List<String> incorrectAnswers) {
         this.type = type;
         this.difficulty = difficulty;
         this.category = category;

@@ -10,7 +10,6 @@ import android.os.Parcelable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +33,8 @@ import java.util.Map;
  */
 public class DashboardActivity extends AppCompatActivity {
 
-    FirebaseHelper firebaseHelper;   // reference to DB layer
+    // reference to DB layer
+    FirebaseHelper firebaseHelper;
 
     // reference to API request layer
     APIRequestHelper apiRequestHelper;
@@ -182,7 +181,6 @@ public class DashboardActivity extends AppCompatActivity {
         // we will use a Bundle object to send our Questions to the next screen
         Bundle bundle = new Bundle();
 
-
         bundle.putParcelableArrayList("QUIZ_QUESTIONS", (ArrayList<? extends Parcelable>) questionsForQuiz);
 
         // put this Bundle in the Intent, and send to TakeQuizActivity
@@ -242,14 +240,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         // set the adapter
         spinnerTextView.setAdapter(adapter);
-
-        spinnerTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // do nothing
-            }
-        });
-
     }
 
     /**

@@ -15,7 +15,6 @@ import com.example.kataquiz.databinding.CardBinding;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Adapter allowing us to generate our card stack
@@ -67,7 +66,7 @@ public class QuestionCardAdapter extends RecyclerView.Adapter<QuestionCardAdapte
         holder.binding.displayDiffAndCategoryTV.setText(cardItem.getCategory() + " - " +
                 difficultyString.substring(0, 1).toUpperCase() + difficultyString.substring(1));
 
-        // adapter to help us populate the spinners
+        // adapter to help us populate the spinners for answer choices
         ArrayAdapter<String> adapter;
 
         // now, depending on the type of the question, we want to set up the UI differently

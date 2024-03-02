@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,12 +21,13 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignUpActivity extends AppCompatActivity {
     NavigationHelper navigationHelper; // reference to Navigation helper class
 
-    // get references to UI elements
-    private EditText emailET, passwordET, firstNameET, lastNameET;
-
     FirebaseHelper firebaseHelper;   // reference to class that interacts w/ DB
 
+    // get references to UI elements
+    EditText emailET, passwordET, firstNameET, lastNameET;
+
     private final String TAG = "SignUpActivity";    // needed for Log messages
+
     /**
      * Main goal is to initialize UI references
      * @param savedInstanceState unused
@@ -73,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // log appropriate message is task was successful
+                                    // log appropriate message if task was successful
                                     Log.i(TAG, "Account successfully created with email " + email);
 
                                     // reference to currently signed in user

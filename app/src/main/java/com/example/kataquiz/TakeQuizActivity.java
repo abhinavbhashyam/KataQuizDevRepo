@@ -36,13 +36,15 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
 
     CardStackLayoutManager manager;     // manager for layout of card stack
 
+    QuestionCardAdapter mcQuestionCardAdapter;    // reference to custom adapter for card
+                                                  // (allows us to bind data to each card)
+
     List<Question> wrongQuestions = new ArrayList<>();   // list of questions the quiz taker got wrong
 
-    QuestionCardAdapter mcQuestionCardAdapter;    // reference to custom adapter for card
-                                                    // (allows us to bind data to each card)
-    CountDownTimer cdt;   // manager for count down timer that is on each card
+    // list of questions in the quiz
+    List<Question> quizQuestions = new ArrayList<>();
 
-    TextView cardTimerTV;   // timer TV that is on each card
+    CountDownTimer cdt;   // manager for count down timer that is on each card
 
     // timer variables
     long totalSeconds = 60;    // 1 min timer
@@ -52,11 +54,11 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
     // formatting tool for timer
     SimpleDateFormat timerFormat = new SimpleDateFormat("m:ss");
 
+    TextView cardTimerTV;   // timer TV that is on each card
+
     // reference to spinner
     TextInputLayout answerSpinner;
 
-    // list of questions in the quiz
-    List<Question> quizQuestions = new ArrayList<>();
 
 
     /**
@@ -75,7 +77,7 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
         // initialize cardstack layout manager
         manager = new CardStackLayoutManager(this, this);
         manager.setStackFrom(StackFrom.Top);    // set appearence of stack
-        manager.setVisibleCount(2);    // 1 card visible at a time
+        manager.setVisibleCount(2);    // 2 cards visible at a time
         manager.setDirections(Direction.HORIZONTAL);    // swiping horizontally
         manager.setCanScrollVertical(false);    // cannot scroll vertically
 
@@ -166,6 +168,11 @@ public class TakeQuizActivity extends AppCompatActivity implements CardStackList
         cdt.start();    // start timer when card appears
     }
 
+    /**
+     * Handles all action that is taken when a user swipes a card or if time expires for question
+     * @param view view object corresponding to current card
+     * @param position where we are in list of cards (as an index)
+     */
     @Override
     public void onCardDisappeared(View view, int position) {
         // get reference to relevant UI element (spinner)

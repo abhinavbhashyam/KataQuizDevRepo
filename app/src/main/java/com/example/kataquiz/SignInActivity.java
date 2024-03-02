@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
-import org.checkerframework.checker.units.qual.N;
 
 /**
  * Landing page; either signs in a specific user or takes them to sign up
