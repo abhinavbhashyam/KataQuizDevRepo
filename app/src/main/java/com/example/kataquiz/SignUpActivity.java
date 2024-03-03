@@ -100,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             } catch (Exception e){
                 // an unusual error has occurred
-                Toast.makeText(getApplicationContext(), "An error has occured. Try restarting the " +
+                Toast.makeText(getApplicationContext(), "An error has occurred. Try restarting the " +
                         "application", Toast.LENGTH_SHORT).show();
             }
         }

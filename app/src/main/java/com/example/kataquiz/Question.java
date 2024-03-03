@@ -18,6 +18,10 @@ enum Difficulty {
     MEDIUM,
     HARD
 }
+
+/**
+ * Class for a Question object
+ */
 public class Question implements Parcelable {
     // instance variables
     private Type type;
