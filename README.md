@@ -10,9 +10,9 @@ There are multiple ways to test this application:
 
 https://github.com/abhinavbhashyam/KataQuizDevRepo/assets/84284109/5a22cdb6-9c93-47bf-be0a-65543f7023de
 
+## Potential Improvements
+One thing I can fix in future iterations of the application is the issue of some of the symbols in the titles of questions not rendering properly: for example, the symbols &, "", and ö (as in Schrödinger) seem to be rendered incorrectly in the JSON that is returned from the database. One way I could address this issue is by scanning for these improperly rendered symbols in the JSON data, and correcting them before displaying the questions to the user.
+
 ## Final Notes
 For the card stack structure in my application, I used the following library: https://github.com/yuyakaido/CardStackView.
 Also, some of the starter Firebase code (as well as some basic code for UI design) is from one of my previous projects, QuizzingApp (a link to it can be found here: https://github.com/BananaBruise/QuizzingApp).
-
-## Potential Improvements
-One thing I can fix in future iterations of the application is the issue of some of the symbols in the titles of questions not rendering properly: for example, the symbols &, "", and ö (as in Schrödinger) seem to be rendered incorrectly in the JSON that is returned from the database. One way I could address this issue is by scanning for these improperly rendered symbols in the JSON data, and correcting them before displaying the questions to the user.
