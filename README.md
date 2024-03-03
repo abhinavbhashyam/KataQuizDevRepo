@@ -4,9 +4,9 @@ to the user's quiz-taking process. This application was built using Android Stud
 
 ## Testing the App
 There are multiple ways to test this application: 
-  1. (Preferred) If you have access to an Android device, you may use the following link to grab the latest version of the application: https://appdistribution.firebase.dev/i/760093349349e695. Please follow the directions that are given upon clicking the link.
+  1. (Preferred) If you have access to an Android device, you may use the following link to grab the latest version of the application: https://appdistribution.firebase.dev/i/9c808ccb082f3de1. Please follow the directions that are given upon clicking the link (note: please do not enter any of your personal information into the application, so we can keep users anonymous).
   2. If you do not have access to an Android device, you can try the app using an Android Device Emulator. One way to do this is by cloning this repository, downloading the latest version of Android Studio, and opening up the project within Android Studio. Then, you can open up an Emulator and run the app.
-  3. If the above two options don't work, I have created a small demonstration video of some of the main features of the application in action. You can find the video right below (note: the video does not demonstrate the procedure for signing up; I filmed the video after signing up a user account; also, please do not enter any of your personal information into the application, so we can keep users anonymous).
+  3. If the above two options don't work, I have created a small demonstration video of some of the main features of the application in action. You can find the video right below (note: the video does not demonstrate the procedure for signing up; I filmed the video after signing up a user account).
 
 https://github.com/abhinavbhashyam/KataQuizDevRepo/assets/84284109/5a22cdb6-9c93-47bf-be0a-65543f7023de
 
