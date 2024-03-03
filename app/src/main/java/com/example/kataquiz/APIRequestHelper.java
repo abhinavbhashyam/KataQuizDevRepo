@@ -98,7 +98,7 @@ public class APIRequestHelper {
                     callback.onCallbackQuiz(questionsInQuiz);
 
                 } catch (Exception e) {
-                    // in case of error
+                    // in case of error (i.e. possible error in JSON parsing)
                     e.printStackTrace();
                 }
             }
