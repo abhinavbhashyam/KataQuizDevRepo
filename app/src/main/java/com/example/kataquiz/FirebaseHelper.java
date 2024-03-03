@@ -63,6 +63,8 @@ public class FirebaseHelper {
      * @param callback used to call back the caller to return data
      */
     public void readUser(String uid, FirestoreUserCallback callback) {
+        String TAG = "readUser";
+
         // get document corresponding to this user
         DocumentReference docRef = db.collection("Users").document(uid);
 
@@ -76,7 +78,7 @@ public class FirebaseHelper {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
+                Log.d(TAG, "Unable to read user from database");
             }
         });
     }
